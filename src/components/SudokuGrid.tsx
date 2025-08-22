@@ -41,7 +41,6 @@ const sudokuPuzzles = {
     [4,0,0,0,0,0,6,0,3],
     [0,9,3,0,0,0,0,0,0],
   ],
-
 };
 
 const sudokuSolutions = {
@@ -78,7 +77,6 @@ const sudokuSolutions = {
     [4,7,2,9,1,5,6,8,3],
     [1,9,3,7,8,6,5,4,2],
   ],
-
 };
 
 // Color mapping for each number (1-9)
@@ -144,7 +142,7 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({ difficulty, setErrorCount }) =>
   const handleNumberSelect = (number: number) => setSelectedNumber(number);
 
   const getCellClassName = (row: number, col: number) => {
-    let className = 'sudoku-cell cursor-pointer text-lg font-bold flex items-center justify-center w-12 h-12 rounded-lg';
+    let className = 'sudoku-cell cursor-pointer text-lg font-bold flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg m-0.5';
 
     // Handle cells with numbers (original or user-placed)
     if (grid[row][col] !== 0) {
@@ -182,14 +180,14 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({ difficulty, setErrorCount }) =>
         عدد الأخطاء: {errorCount}
       </div>
 
-      <div className="game-card p-6 relative">
-        <div className="grid grid-cols-9 gap-0.5 max-w-lg mx-auto bg-gray-300 p-2 rounded-lg">
+      <div className="game-card p-4 sm:p-6 relative">
+        <div className="grid grid-cols-9 gap-1 sm:gap-0.5 max-w-xs sm:max-w-lg mx-auto bg-gray-300 p-2 rounded-lg">
           {grid.map((row, rowIndex) =>
             row.map((cell, colIndex) => (
               <div
                 key={`${rowIndex}-${colIndex}`}
                 onClick={() => handleCellClick(rowIndex, colIndex)}
-                className={`${getCellClassName(rowIndex, colIndex)} ${getBorderClasses(rowIndex, colIndex)} flex items-center justify-center w-12 h-12`}
+                className={`${getCellClassName(rowIndex, colIndex)} ${getBorderClasses(rowIndex, colIndex)} flex items-center justify-center`}
               >
                 {cell === 0 ? '' : cell}
               </div>
@@ -198,14 +196,14 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({ difficulty, setErrorCount }) =>
         </div>
       </div>
 
-      <div className="game-card p-6">
+      <div className="game-card p-4 sm:p-6">
         <h3 className="text-lg font-bold text-center mb-4 text-primary">اختر الرقم</h3>
-        <div className="grid grid-cols-9 gap-2 max-w-lg mx-auto">
+        <div className="grid grid-cols-9 gap-2 max-w-xs sm:max-w-lg mx-auto">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
             <button
               key={number}
               onClick={() => handleNumberSelect(number)}
-              className={`w-12 h-12 rounded-lg border-2 font-bold text-lg transition-all duration-200 hover:scale-110 ${numberColors[number]} ${
+              className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg border-2 font-bold text-lg transition-all duration-200 hover:scale-110 ${numberColors[number]} ${
                 selectedNumber === number
                   ? 'border-primary scale-110 shadow-lg'
                   : 'border-gray-300 hover:border-primary/50'
