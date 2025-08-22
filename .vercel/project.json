@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/" }
+  ],
+  "env": {},
+  "buildCommand": "npm install && npm run build",
+  "installCommand": "npm install",
+  "framework": "other",
+  "nodeVersion": "18.x",
+  "outputDirectory": "dist"
+}
