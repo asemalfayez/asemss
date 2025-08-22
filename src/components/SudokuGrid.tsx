@@ -142,7 +142,7 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({ difficulty, setErrorCount }) =>
   const handleNumberSelect = (number: number) => setSelectedNumber(number);
 
   const getCellClassName = (row: number, col: number) => {
-    let className = 'sudoku-cell cursor-pointer text-lg font-bold flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg m-0.5';
+    let className = 'sudoku-cell cursor-pointer text-base sm:text-lg font-bold flex items-center justify-center w-8 h-8 sm:w-12 sm:h-12 rounded-lg m-0.5';
 
     // Handle cells with numbers (original or user-placed)
     if (grid[row][col] !== 0) {
@@ -203,7 +203,7 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({ difficulty, setErrorCount }) =>
             <button
               key={number}
               onClick={() => handleNumberSelect(number)}
-              className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg border-2 font-bold text-lg transition-all duration-200 hover:scale-110 ${numberColors[number]} ${
+              className={`w-8 h-8 sm:w-12 sm:h-12 rounded-lg border-2 font-bold text-base sm:text-lg transition-all duration-200 hover:scale-110 ${numberColors[number]} ${
                 selectedNumber === number
                   ? 'border-primary scale-110 shadow-lg'
                   : 'border-gray-300 hover:border-primary/50'
