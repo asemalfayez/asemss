@@ -48,18 +48,18 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen py-8 px-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-screen py-4 px-2 sm:px-4 bg-background">
+      <div className="max-w-3xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <Brain className="w-8 h-8 text-primary" />
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+            <Brain className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
+            <h1 className="text-2xl sm:text-4xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
               Sudoku Color Play
             </h1>
-            <Sparkles className="w-8 h-8 text-secondary" />
+            <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-secondary" />
           </div>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-sm sm:text-lg text-muted-foreground max-w-xl mx-auto px-2">
             تحدِ عقلك مع لعبة السودوكو الكلاسيكية وتحدي تلوين الرسم البياني في تجربة واحدة مميزة
           </p>
         </div>
@@ -75,11 +75,11 @@ const Index = () => {
         />
 
         {/* Game Area */}
-        <div className="max-w-2xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-primary flex items-center justify-center gap-3 mb-6">
-            <Gamepad2 className="w-8 h-8" />
+        <div className="max-w-md mx-auto">
+          <h2 className="text-xl sm:text-3xl font-bold text-center text-primary flex items-center justify-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+            <Gamepad2 className="w-6 h-6 sm:w-8 sm:h-8" />
             السودوكو الملون
-            <Brain className="w-8 h-8" />
+            <Brain className="w-6 h-6 sm:w-8 sm:h-8" />
           </h2>
           <SudokuGrid
             difficulty={difficulty}
@@ -88,9 +88,9 @@ const Index = () => {
         </div>
 
         {/* Instructions */}
-        <div className="mt-12 game-card p-6 text-center max-w-2xl mx-auto">
-          <h3 className="text-xl font-bold mb-4 text-primary">كيفية اللعب</h3>
-          <div className="space-y-4 text-sm text-muted-foreground">
+        <div className="mt-8 sm:mt-12 game-card p-4 sm:p-6 text-center max-w-md mx-auto">
+          <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4 text-primary">كيفية اللعب</h3>
+          <div className="space-y-3 text-xs sm:text-sm text-muted-foreground">
             <div>
               <h4 className="font-semibold text-foreground mb-2">🧩 السودوكو الملون</h4>
               <p>1. انقر على خانة فارغة في شبكة السودوكو</p>
