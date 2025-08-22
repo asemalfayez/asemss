@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 
 interface SudokuGridProps {
-  difficulty: 'easy' | 'medium' | 'hard';
+  difficulty: 'easy' | 'medium' | 'hard' | 'custom';
   setErrorCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
@@ -40,6 +40,17 @@ const sudokuPuzzles = {
     [0, 4, 0, 2, 0, 0, 0, 6, 0],
     [9, 0, 3, 0, 0, 0, 0, 0, 0],
     [0, 2, 0, 0, 0, 0, 1, 0, 0]
+  ],
+  custom: [
+    [8, 0, 2, 5, 0, 0, 6, 3, 0],
+    [0, 6, 0, 0, 8, 0, 0, 0, 0],
+    [0, 4, 0, 2, 0, 1, 0, 0, 7],
+    [0, 9, 0, 0, 2, 0, 0, 0, 0],
+    [0, 0, 7, 0, 4, 0, 5, 0, 0],
+    [0, 0, 0, 9, 0, 0, 0, 4, 0],
+    [2, 0, 0, 0, 4, 0, 9, 0, 7],
+    [0, 0, 0, 2, 0, 0, 0, 1, 0],
+    [3, 0, 1, 0, 7, 4, 0, 0, 8]
   ]
 };
 
@@ -77,6 +88,17 @@ const sudokuSolutions = {
     [3, 4, 5, 2, 1, 8, 9, 6, 7],
     [9, 8, 7, 3, 5, 6, 1, 4, 2],
     [1, 6, 2, 9, 7, 4, 5, 3, 8]
+  ],
+  custom: [
+    [8, 7, 2, 5, 9, 6, 1, 3, 4],
+    [9, 6, 3, 4, 8, 7, 2, 5, 1],
+    [1, 4, 5, 2, 3, 1, 6, 9, 7],
+    [6, 9, 4, 7, 2, 5, 3, 8, 1],
+    [5, 1, 7, 8, 4, 3, 9, 6, 2],
+    [2, 8, 6, 9, 1, 4, 7, 5, 3],
+    [7, 5, 8, 1, 4, 2, 9, 6, 3],
+    [4, 3, 9, 6, 5, 8, 1, 2, 7],
+    [3, 2, 1, 9, 7, 4, 5, 8, 6]
   ]
 };
 
@@ -100,7 +122,7 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({ difficulty, setErrorCount }) =>
   const [errors, setErrors] = useState<boolean[][]>([]);
   const [errorCount, setLocalErrorCount] = useState<number>(0);
   const [selectedNumber, setSelectedNumber] = useState<number>(1);
-  const [selectedCell, setSelectedCell] = useState<{ row: number; col: number } | null>(null);
+  const [selectedCell, setSelectedCell] = useState<{row: number, col: number} | null>(null);
 
   // Initialize grid and solution
   useEffect(() => {
@@ -116,7 +138,7 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({ difficulty, setErrorCount }) =>
 
   const handleCellClick = (row: number, col: number) => {
     if (initialGrid[row][col] !== 0) return;
-    setSelectedCell({ row, col });
+    setSelectedCell({row, col});
     const newGrid = grid.map(r => [...r]);
     const newErrors = errors.map(r => [...r]);
 
@@ -143,18 +165,18 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({ difficulty, setErrorCount }) =>
   const handleNumberSelect = (number: number) => setSelectedNumber(number);
 
   const getCellClassName = (row: number, col: number) => {
-    let className = 'sudoku-cell cursor-pointer text-base sm:text-lg font-bold flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-lg bg-gray-200';
+    let className = 'sudoku-cell cursor-pointer text-lg font-bold flex items-center justify-center w-12 h-12 rounded-lg';
 
     // Handle cells with numbers (original or user-placed)
     if (grid[row][col] !== 0) {
-      className += ' text-gray-800';
+      className += ` ${numberColors[grid[row][col]]}`;
       if (initialGrid[row][col] !== 0) {
         // Original puzzle number
         className += ' opacity-90 shadow-inner cursor-not-allowed';
       }
     } else {
       // Empty cell
-      className += ' text-gray-500';
+      className += ' bg-gray-200 text-gray-500';
     }
 
     // Apply selected number's background color to selected cell
@@ -176,19 +198,19 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({ difficulty, setErrorCount }) =>
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6">
-      <div className="text-center text-base sm:text-lg font-bold text-gray-800">
+    <div className="space-y-6">
+      <div className="text-center text-lg font-bold text-gray-800">
         عدد الأخطاء: {errorCount}
       </div>
 
-      <div className="game-card p-4 sm:p-6 relative">
-        <div className="grid grid-cols-9 gap-0.5 max-w-sm sm:max-w-lg mx-auto bg-gray-300 p-1 sm:p-2 rounded-lg">
+      <div className="game-card p-6 relative">
+        <div className="grid grid-cols-9 gap-0.5 max-w-lg mx-auto bg-gray-300 p-2 rounded-lg">
           {grid.map((row, rowIndex) =>
             row.map((cell, colIndex) => (
               <div
                 key={`${rowIndex}-${colIndex}`}
                 onClick={() => handleCellClick(rowIndex, colIndex)}
-                className={`${getCellClassName(rowIndex, colIndex)} ${getBorderClasses(rowIndex, colIndex)} flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12`}
+                className={`${getCellClassName(rowIndex, colIndex)} ${getBorderClasses(rowIndex, colIndex)} flex items-center justify-center w-12 h-12`}
               >
                 {cell === 0 ? '' : cell}
               </div>
@@ -197,14 +219,14 @@ const SudokuGrid: React.FC<SudokuGridProps> = ({ difficulty, setErrorCount }) =>
         </div>
       </div>
 
-      <div className="game-card p-4 sm:p-6">
-        <h3 className="text-base sm:text-lg font-bold text-center mb-3 sm:mb-4 text-primary">اختر الرقم</h3>
-        <div className="grid grid-cols-9 gap-1 sm:gap-2 max-w-sm sm:max-w-lg mx-auto">
+      <div className="game-card p-6">
+        <h3 className="text-lg font-bold text-center mb-4 text-primary">اختر الرقم</h3>
+        <div className="grid grid-cols-9 gap-2 max-w-lg mx-auto">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((number) => (
             <button
               key={number}
               onClick={() => handleNumberSelect(number)}
-              className={`w-10 h-10 sm:w-12 sm:h-12 rounded-lg border-2 font-bold text-base sm:text-lg transition-all duration-200 hover:scale-110 ${numberColors[number]} ${
+              className={`w-12 h-12 rounded-lg border-2 font-bold text-lg transition-all duration-200 hover:scale-110 ${numberColors[number]} ${
                 selectedNumber === number
                   ? 'border-primary scale-110 shadow-lg'
                   : 'border-gray-300 hover:border-primary/50'
